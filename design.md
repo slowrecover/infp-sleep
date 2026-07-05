@@ -1,6 +1,6 @@
-# 松手 / letgo 设计
+# INFP 安眠 / INFP Sleep 设计
 
-**背景：** 同属 [[2026-07-04-infp-90day-plan]] 摩擦点驱动的产品方向，与 [[unstuck]] 是同一"拆解摩擦点"家族，但机制不同——unstuck 针对"情绪卡住导致的任务拖延"，letgo 针对"报复性熬夜"（revenge bedtime procrastination）：知道该睡了，却不想放下手机。
+**背景：** 同属 [[2026-07-04-infp-90day-plan]] 摩擦点驱动的产品方向，与 [[unstuck]] 是同一"拆解摩擦点"家族，但机制不同——unstuck 针对"情绪卡住导致的任务拖延"，INFP 安眠 针对"报复性熬夜"（revenge bedtime procrastination）：知道该睡了，却不想放下手机。
 
 **核心机制：** 报复性熬夜的驱动因素不是手机本身多好玩，而是白天缺乏自主感，晚上熬夜是唯一能抢回来的"我的时间"（Kroese et al. 2014）。但用户在设计过程中明确了不需要单独的心理引导开场/收尾（"自主感命名"/"我选择"确认被拿掉），改为直接提供一套有科学依据的具体睡前仪式动作序列，靠动作本身完成心理效果。
 
@@ -72,7 +72,7 @@
 
 ## 技术与发布
 
-- 单文件 HTML/CSS/JS，无框架、无外部依赖，与 `unstuck-mobile.html` 同一技术路线
+- 单文件 HTML/CSS/JS，无框架、无外部依赖，与 `unstuck-mobile.html` 同一技术路线（源文件命名为 `infp-sleep-mobile.html`）
 - 语音提示和白噪音均为浏览器原生 API 实时生成（`speechSynthesis` / Web Audio API 噪声+滤波），不嵌入任何音频文件，不发起网络请求
 - 中英双语切换，右上角 `中/EN` 按钮，实现方式与 unstuck 一致
 - 视觉延续 unstuck 的设计系统（卡片/圆点进度/CSS 变量主题结构），主色调换成夜间氛围色（更深的靛蓝/墨蓝），做视觉区分
@@ -81,10 +81,11 @@
 
 ## 项目文件夹
 
-`C:\Users\lucky\ideas\projects\letgo\`：
+`C:\Users\lucky\ideas\projects\infp-sleep\`：
 - `design.md`（本文件）
 - `plan.md`（实施计划）
-- `letgo-mobile.html`（工具源文件）
+- `infp-sleep-mobile.html`（工具源文件）
+- GitHub 仓库：`https://github.com/slowrecover/infp-sleep`
 
 单任务项目，不再拆 task-N 子文件夹（对比 unstuck 有桌面+手机两个任务才拆分）。
 
