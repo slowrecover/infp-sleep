@@ -547,11 +547,12 @@
       filter.type = "lowpass";
       filter.frequency.value = 900;
       noiseGain = audioCtx.createGain();
-      noiseGain.gain.value = 0.12;
+      noiseGain.gain.value = 0.3;
       noiseSource.connect(filter);
       filter.connect(noiseGain);
       noiseGain.connect(audioCtx.destination);
       noiseSource.start(0);
+      if (audioCtx.state === "suspended") audioCtx.resume();
     } catch (e) {}
   }
 
