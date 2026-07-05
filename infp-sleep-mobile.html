@@ -485,9 +485,13 @@
       var s = remaining % 60;
       el.textContent = m + ":" + (s < 10 ? "0" : "") + s;
     }
+    var lastCueIndex = -1;
     function updateCue() {
       if (!cues || !cues.length) return;
-      cueEl.textContent = cues[Math.floor(elapsed / 10) % cues.length];
+      var idx = Math.floor(elapsed / 10) % cues.length;
+      if (idx === lastCueIndex) return;
+      lastCueIndex = idx;
+      cueEl.textContent = cues[idx];
       cueEl.style.animation = "none";
       void cueEl.offsetWidth;
       cueEl.style.animation = "";
