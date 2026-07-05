@@ -201,11 +201,13 @@
     <div class="sub-timer">
       <p class="hint" data-i18n="s1Brush"></p>
       <div class="timer" id="brushTimer">3:00</div>
+      <p class="hint" id="brushCue"></p>
       <button class="secondary" id="brushStart" data-i18n="s1StartBrush"></button>
     </div>
     <div class="sub-timer">
       <p class="hint" data-i18n="s1Feet"></p>
       <div class="timer" id="feetTimer">3:00</div>
+      <p class="hint" id="feetCue"></p>
       <button class="secondary" id="feetStart" data-i18n="s1StartFeet"></button>
     </div>
     <button class="primary" data-next="2" data-i18n="next"></button>
@@ -264,6 +266,8 @@
       s1StartBrush: "开始刷牙计时",
       s1Feet: "洗脚 3 分钟",
       s1StartFeet: "开始洗脚计时",
+      brushCues: ["感受牙刷在牙齿上移动的触感", "留意薄荷的味道", "感觉手臂的动作，慢下来"],
+      feetCues: ["感受水温接触皮肤", "留意脚底放松下来的感觉", "感觉身体慢慢卸下重量"],
       s2Title: "清空大脑",
       s2Hint: "这里写的都是垃圾，写完就倒掉，不会被保存，随便写。",
       s2Placeholder: "脑子里在转什么，都写下来……",
@@ -302,6 +306,8 @@
       s1StartBrush: "Start brushing timer",
       s1Feet: "Soak/wash feet, 3 minutes",
       s1StartFeet: "Start foot timer",
+      brushCues: ["Feel the bristles moving against your teeth", "Notice the taste of mint", "Slow down the motion of your arm"],
+      feetCues: ["Feel the water against your skin", "Notice your feet relaxing", "Feel your body slowly settling"],
       s2Title: "Empty your mind",
       s2Hint: "Everything you write here is trash — it gets thrown out, not saved. Write freely.",
       s2Placeholder: "Whatever's spinning in your head, write it out...",
@@ -400,19 +406,28 @@
     });
   });
 
-  // Step 1: brush + feet timers
-  function startCountdown(displayId, seconds, onDone) {
+  // Step 1: brush + feet timers, with a rotating attention cue every 10 seconds
+  function startCountdown(displayId, cueId, seconds, cues, onDone) {
     var el = document.getElementById(displayId);
+    var cueEl = document.getElementById(cueId);
     var remaining = seconds;
+    var elapsed = 0;
     function tick() {
       var m = Math.floor(remaining / 60);
       var s = remaining % 60;
       el.textContent = m + ":" + (s < 10 ? "0" : "") + s;
     }
+    function updateCue() {
+      if (!cues || !cues.length) return;
+      cueEl.textContent = cues[Math.floor(elapsed / 10) % cues.length];
+    }
     tick();
+    updateCue();
     var interval = setInterval(function () {
       remaining--;
+      elapsed++;
       tick();
+      updateCue();
       if (remaining <= 0) {
         clearInterval(interval);
         if (onDone) onDone();
@@ -423,11 +438,11 @@
 
   document.getElementById("brushStart").addEventListener("click", function () {
     if (brushInterval) return;
-    brushInterval = startCountdown("brushTimer", 180, function () { brushInterval = null; });
+    brushInterval = startCountdown("brushTimer", "brushCue", 180, i18n[lang].brushCues, function () { brushInterval = null; });
   });
   document.getElementById("feetStart").addEventListener("click", function () {
     if (feetInterval) return;
-    feetInterval = startCountdown("feetTimer", 180, function () { feetInterval = null; });
+    feetInterval = startCountdown("feetTimer", "feetCue", 180, i18n[lang].feetCues, function () { feetInterval = null; });
   });
 
   // Step 3: meditation duration chips
@@ -603,6 +618,8 @@
     document.getElementById("dumpInput").value = "";
     document.getElementById("brushTimer").textContent = "3:00";
     document.getElementById("feetTimer").textContent = "3:00";
+    document.getElementById("brushCue").textContent = "";
+    document.getElementById("feetCue").textContent = "";
     if (brushInterval) { clearInterval(brushInterval); brushInterval = null; }
     if (feetInterval) { clearInterval(feetInterval); feetInterval = null; }
     meditationMinutes = 10;
