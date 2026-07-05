@@ -213,23 +213,28 @@
       <p class="hint cue-text" id="brushCue"></p>
       <button class="secondary" id="brushStart" data-i18n="s1StartBrush"></button>
     </div>
+    <button class="primary" data-next="2" data-i18n="next"></button>
+  </div>
+
+  <div class="step" data-step="2">
+    <h1 data-i18n="s1bTitle"></h1>
     <div class="sub-timer">
       <p class="hint" data-i18n="s1Feet"></p>
       <div class="timer" id="feetTimer">3:00</div>
       <p class="hint cue-text" id="feetCue"></p>
       <button class="secondary" id="feetStart" data-i18n="s1StartFeet"></button>
     </div>
-    <button class="primary" data-next="2" data-i18n="next"></button>
-  </div>
-
-  <div class="step" data-step="2">
-    <h1 data-i18n="s2Title"></h1>
-    <p class="hint" data-i18n="s2Hint"></p>
-    <textarea id="dumpInput" data-i18n-placeholder="s2Placeholder"></textarea>
-    <button class="primary" data-next="3" data-i18n="s2Done"></button>
+    <button class="primary" data-next="3" data-i18n="next"></button>
   </div>
 
   <div class="step" data-step="3">
+    <h1 data-i18n="s2Title"></h1>
+    <p class="hint" data-i18n="s2Hint"></p>
+    <textarea id="dumpInput" data-i18n-placeholder="s2Placeholder"></textarea>
+    <button class="primary" data-next="4" data-i18n="s2Done"></button>
+  </div>
+
+  <div class="step" data-step="4">
     <h1 data-i18n="s3Title"></h1>
     <p class="hint" data-i18n="s3Hint"></p>
     <div class="chips" id="durationChips"></div>
@@ -240,19 +245,19 @@
     <div class="breathe-circle" id="breatheCircle"></div>
     <div class="timer" id="meditationTimer">10:00</div>
     <button class="secondary" id="meditationStart" data-i18n="s3Start"></button>
-    <button class="primary" data-next="4" data-i18n="next"></button>
+    <button class="primary" data-next="5" data-i18n="next"></button>
   </div>
 
-  <div class="step" data-step="4">
+  <div class="step" data-step="5">
     <h1 data-i18n="s4Title"></h1>
     <p class="hint" data-i18n="s4Hint"></p>
     <input type="text" id="gratitude1" data-i18n-placeholder="s4Placeholder1" />
     <input type="text" id="gratitude2" data-i18n-placeholder="s4Placeholder2" />
     <input type="text" id="gratitude3" data-i18n-placeholder="s4Placeholder3" />
-    <button class="primary" data-next="5" data-i18n="next"></button>
+    <button class="primary" data-next="6" data-i18n="next"></button>
   </div>
 
-  <div class="step" data-step="5">
+  <div class="step" data-step="6">
     <h1 data-i18n="s5Title"></h1>
     <p class="hint" data-i18n="s5Hint"></p>
     <div class="summary-box" id="summaryBox"></div>
@@ -270,7 +275,8 @@
       openTitle: "开始之前",
       openHint: "先把明天要做的事写在你熟悉的地方，提前为明天做个打算。接下来的五步，就不用再惦记这些了。",
       start: "开始",
-      s1Title: "洗漱",
+      s1Title: "刷牙",
+      s1bTitle: "洗脚",
       s1Brush: "刷牙 3 分钟",
       s1StartBrush: "开始刷牙计时",
       s1Feet: "洗脚 3 分钟",
@@ -336,7 +342,8 @@
       openTitle: "Before you begin",
       openHint: "First, write down tomorrow's to-dos somewhere familiar to you. The next five steps won't ask you to hold onto them.",
       start: "Start",
-      s1Title: "Wash up",
+      s1Title: "Brush teeth",
+      s1bTitle: "Wash feet",
       s1Brush: "Brush teeth, 3 minutes",
       s1StartBrush: "Start brushing timer",
       s1Feet: "Soak/wash feet, 3 minutes",
@@ -400,7 +407,7 @@
   };
 
   var lang = localStorage.getItem("infpSleepLang") || "zh";
-  var totalSteps = 5;
+  var totalSteps = 6;
   var state = { gratitude1: "", gratitude2: "", gratitude3: "" };
   var meditationMinutes = 10;
   var meditationInterval = null;
@@ -462,7 +469,7 @@
       state.gratitude2 = document.getElementById("gratitude2").value.trim();
       state.gratitude3 = document.getElementById("gratitude3").value.trim();
       var next = Number(btn.dataset.next);
-      if (next === 5) finalizeEntry();
+      if (next === 6) finalizeEntry();
       showStep(next);
     });
   });
