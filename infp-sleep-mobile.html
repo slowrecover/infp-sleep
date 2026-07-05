@@ -175,12 +175,21 @@
     color: var(--ink);
   }
   .copied { color: var(--accent-action); font-size: 0.85rem; text-align: center; min-height: 1.2em; }
+  .cue-text { opacity: 1; }
   @media (prefers-reduced-motion: no-preference) {
     .step.active { animation: fade 0.25s ease; }
+    .cue-text { animation: cueFade 10s ease-in-out; }
   }
   @keyframes fade {
     from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cueFade {
+    0% { opacity: 0; transform: scale(0.85); }
+    15% { opacity: 1; transform: scale(1.05); }
+    25% { opacity: 1; transform: scale(1); }
+    80% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.95); }
   }
 </style>
 
@@ -201,13 +210,13 @@
     <div class="sub-timer">
       <p class="hint" data-i18n="s1Brush"></p>
       <div class="timer" id="brushTimer">3:00</div>
-      <p class="hint" id="brushCue"></p>
+      <p class="hint cue-text" id="brushCue"></p>
       <button class="secondary" id="brushStart" data-i18n="s1StartBrush"></button>
     </div>
     <div class="sub-timer">
       <p class="hint" data-i18n="s1Feet"></p>
       <div class="timer" id="feetTimer">3:00</div>
-      <p class="hint" id="feetCue"></p>
+      <p class="hint cue-text" id="feetCue"></p>
       <button class="secondary" id="feetStart" data-i18n="s1StartFeet"></button>
     </div>
     <button class="primary" data-next="2" data-i18n="next"></button>
@@ -472,6 +481,9 @@
     function updateCue() {
       if (!cues || !cues.length) return;
       cueEl.textContent = cues[Math.floor(elapsed / 10) % cues.length];
+      cueEl.style.animation = "none";
+      void cueEl.offsetWidth;
+      cueEl.style.animation = "";
     }
     tick();
     updateCue();
